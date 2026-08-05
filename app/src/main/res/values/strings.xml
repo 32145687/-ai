@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Assistant</string>
+    <string name="settings_title">设置</string>
+    <string name="chat_title">聊天</string>
+    <string name="persona_title">人格</string>
+    <string name="memory_title">记忆</string>
+    <string name="reminder_title">提醒</string>
+    
+    <!-- Chat -->
+    <string name="chat_input_hint">输入消息...</string>
+    <string name="chat_send">发送</string>
+    <string name="chat_welcome">开始与 AI 对话吧！</string>
+    <string name="chat_clear">清空对话</string>
+    
+    <!-- Settings -->
+    <string name="settings_api_key">API 密钥</string>
+    <string name="settings_api_provider">API 提供商</string>
+    <string name="settings_model">模型选择</string>
+    <string name="settings_theme">主题</string>
+    <string name="settings_language">语言</string>
+    <string name="settings_learning">学习功能</string>
+    <string name="settings_reminders">提醒功能</string>
+    <string name="settings_memory_retention">记忆保留天数</string>
+    <string name="settings_advanced">高级设置</string>
+    
+    <!-- Personas -->
+    <string name="persona_create">创建新人格</string>
+    <string name="persona_edit">编辑人格</string>
+    <string name="persona_delete">删除人格</string>
+    <string name="persona_default">默认人格</string>
+    
+    <!-- Reminders -->
+    <string name="reminder_create">创建提醒</string>
+    <string name="reminder_edit">编辑提醒</string>
+    <string name="reminder_delete">删除提醒</string>
+    <string name="reminder_complete">标记完成</string>
+    <string name="reminder_pending">待处理</string>
+    <string name="reminder_completed">已完成</string>
+    
+    <!-- Memory -->
+    <string name="memory_search">搜索记忆</string>
+    <string name="memory_delete">删除记忆</string>
+    <string name="memory_types_all">全部</string>
+    <string name="memory_types_facts">事实</string>
+    <string name="memory_types_habits">习惯</string>
+    <string name="memory_types_preferences">偏好</string>
+    
+    <!-- Errors -->
+    <string name="error_api_key_missing">请先配置 API 密钥</string>
+    <string name="error_network">网络错误，请检查连接</string>
+    <string name="error_generic">发生错误，请稍后重试</string>
+    
+    <!-- Common -->
+    <string name="common_save">保存</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_delete">删除</string>
+    <string name="common_edit">编辑</string>
+    <string name="common_loading">加载中...</string>
+</resources>

@@ -33,4 +33,14 @@ interface LlmApiService {
         @Header("api-key") apiKey: String? = null,
         @Header("Content-Type") contentType: String = "application/json"
     ): Response<ChatCompletionResponse>
+    
+    /**
+     * OpenAI-compatible embeddings endpoint
+     */
+    @POST("v1/embeddings")
+    suspend fun createEmbedding(
+        @Body request: EmbeddingRequest,
+        @Header("Authorization") authorization: String,
+        @Header("Content-Type") contentType: String = "application/json"
+    ): Response<EmbeddingResponse>
 }

@@ -6,6 +6,7 @@ import com.myai.assistant.data.manager.SettingsManager
 import com.myai.assistant.data.remote.model.MessageDto
 import com.myai.assistant.domain.model.*
 import com.myai.assistant.domain.repository.*
+import com.myai.assistant.domain.service.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,19 +20,26 @@ class ChatViewModel @Inject constructor(
     private val personaRepository: PersonaRepository,
     private val memoryRepository: MemoryRepository,
     private val llmRepository: LlmRepository,
-    private val settingsManager: SettingsManager
+    private val settingsManager: SettingsManager,
+    private val ragService: RagService,
+    private val memoryExtractionService: MemoryExtractionService,
+    private val embeddingService: EmbeddingService
 ) : ViewModel() {
 
     private val _messages = MutableStateFlow<List<Message>>(emptyList())
     val messages: StateFlow<List<Message>> = _messages.asStateFlow()
 
-    private val _currentPersonaId = MutableStateFlow<String>("friendly_companion")
-    val currentPersonaId: StateFlow<String> = _currentPersonaId.asStateFlow()
+    private val _personas = MutableStateFlow<List<Persona>>(emptyList())
+    val personas: StateFlow<List<Persona>> = _personas.asStateFlow()
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    private val _selectedPersona = MutableStateFlow<Persona?>(null)
+    val selectedPersona: StateFlow<Persona?> = _selectedPersona.asStateFlow()
+
+    private val _isThinking = MutableStateFlow(false)
+    val isThinking: StateFlow<Boolean> = _isThinking.asStateFlow()
 
     init {
+        loadPersonas()
         loadMessages()
         viewModelScope.launch {
             // Initialize default personas if needed
@@ -39,28 +47,41 @@ class ChatViewModel @Inject constructor(
         }
     }
 
+    fun loadPersonas() {
+        viewModelScope.launch {
+            val personaList = personaRepository.getAllPersonas()
+            _personas.value = personaList
+            // Select first persona by default
+            if (personaList.isNotEmpty() && _selectedPersona.value == null) {
+                _selectedPersona.value = personaList.first()
+            }
+        }
+    }
+
+    fun selectPersona(persona: Persona) {
+        _selectedPersona.value = persona
+        loadMessages()
+    }
+
     fun loadMessages() {
         viewModelScope.launch {
-            val personaId = _currentPersonaId.value
+            val personaId = _selectedPersona.value?.id ?: return@launch
             val msgs = messageRepository.getMessagesForPersona(personaId, limit = 50)
             _messages.value = msgs
         }
     }
 
-    fun switchPersona(personaId: String) {
-        _currentPersonaId.value = personaId
-        loadMessages()
-    }
-
     fun sendMessage(content: String) {
         viewModelScope.launch {
-            val personaId = _currentPersonaId.value
+            val persona = _selectedPersona.value ?: return@launch
+            val personaId = persona.id
             
             // Create user message
             val userMessage = Message(
                 content = content,
                 role = MessageRole.USER,
-                personaId = personaId
+                personaId = personaId,
+                avatarUrl = null // User doesn't need custom avatar
             )
             
             // Save user message
@@ -70,14 +91,11 @@ class ChatViewModel @Inject constructor(
             // Update UI immediately
             _messages.value = listOf(savedUserMessage) + _messages.value
             
-            // Get current persona for system prompt
-            val persona = personaRepository.getPersonaById(personaId)
-            
             // Get recent conversation history for context
             val recentMessages = messageRepository.getMessagesForPersona(personaId, limit = 10)
             
             // Call LLM API
-            _isLoading.value = true
+            _isThinking.value = true
             try {
                 val apiKey = settingsManager.apiKeyFlow.first()
                 if (apiKey.isNullOrBlank()) {
@@ -95,7 +113,7 @@ class ChatViewModel @Inject constructor(
                 // Prepare messages for API
                 val apiMessages = buildList {
                     // Add system prompt if exists
-                    persona?.systemPrompt?.let {
+                    persona.systemPrompt?.let {
                         add(MessageDto(role = "system", content = it))
                     }
                     
@@ -110,7 +128,7 @@ class ChatViewModel @Inject constructor(
 
                 val result = llmRepository.sendChatRequest(
                     messages = apiMessages,
-                    systemPrompt = persona?.systemPrompt,
+                    systemPrompt = persona.systemPrompt,
                     apiKey = apiKey
                 )
 
@@ -121,6 +139,7 @@ class ChatViewModel @Inject constructor(
                         content = assistantContent,
                         role = MessageRole.ASSISTANT,
                         personaId = personaId,
+                        avatarUrl = persona.avatarUrl,
                         metadata = MessageMetadata(
                             modelUsed = response.model,
                             tokensUsed = response.usage?.totalTokens,
@@ -147,7 +166,7 @@ class ChatViewModel @Inject constructor(
                     _messages.value = listOf(errorMessage.copy(id = errorId)) + _messages.value
                 }
             } finally {
-                _isLoading.value = false
+                _isThinking.value = false
             }
         }
     }
@@ -183,7 +202,8 @@ class ChatViewModel @Inject constructor(
 
     fun clearConversation() {
         viewModelScope.launch {
-            messageRepository.clearConversation(_currentPersonaId.value)
+            val personaId = _selectedPersona.value?.id ?: return@launch
+            messageRepository.clearConversation(personaId)
             _messages.value = emptyList()
         }
     }

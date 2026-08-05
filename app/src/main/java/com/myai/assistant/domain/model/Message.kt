@@ -9,7 +9,8 @@ data class Message(
     val role: MessageRole,
     val personaId: String,
     val timestamp: Long = System.currentTimeMillis(),
-    val metadata: MessageMetadata? = null
+    val metadata: MessageMetadata? = null,
+    val avatarUrl: String? = null
 )
 
 enum class MessageRole {

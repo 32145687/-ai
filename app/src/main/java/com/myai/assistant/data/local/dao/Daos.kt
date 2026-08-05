@@ -99,6 +99,24 @@ interface MemoryDao {
     // Semantic search would be implemented with custom queries or FTS
     @Query("SELECT * FROM memories WHERE content LIKE '%' || :query || '%' ORDER BY importance DESC")
     suspend fun searchMemories(query: String): List<MemoryEntity>
+
+    @Query("SELECT * FROM memories ORDER BY createdAt DESC")
+    fun getAllMemories(): Flow<List<MemoryEntity>>
+
+    @Query("UPDATE memories SET importance = :importance, isArchived = :isArchived WHERE id = :id")
+    suspend fun updateMemoryImportance(id: Long, importance: Float, isArchived: Boolean)
+
+    @Query("UPDATE memories SET importance = :importance, isArchived = :isArchived WHERE id = :id")
+    suspend fun updateMemory(memory: MemoryEntity)
+
+    @Query("DELETE FROM memories WHERE isArchived = 1 AND createdAt < :daysAgo")
+    suspend fun deleteArchivedMemoriesOlderThan(daysAgo: Long)
+
+    @Query("DELETE FROM memories WHERE importance < :threshold")
+    suspend fun deleteMemoriesWithImportanceBelow(threshold: Float)
+
+    @Query("DELETE FROM memories WHERE id = :id")
+    suspend fun deleteMemoryById(id: Long)
 }
 
 @Dao

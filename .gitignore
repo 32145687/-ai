@@ -1,39 +1,120 @@
 ```
-# Android/Kotlin specific
+# Android
 *.apk
 *.aar
-*.dex
-*.class
-
-# Gradle
-.gradle/
+*.ap_
 build/
-!gradle/wrapper/gradle-wrapper.properties
-
-# Local configuration file (sdk path, etc)
+.gradle/
+captures/
+.externalNativeBuild
+cxx/
 local.properties
 
-# Log Files
+# Kotlin
+*.kotlin_metadata
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.hprof
+!*.jar
+
+# Gradle
+.gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+
+# Logs
 *.log
 
-# Android Studio Navigation editor temp files
-.navigation/
+# Environment
+.env
+.env.local
+.env.*
 
-# Android Studio profiler and trace outputs
-*.hprof
-*.trace
-
-# Code coverage
+# Coverage reports
 coverage/
-*.ec
+*.gcov
+*.lcov
+*.tf
+*.info
 
-# Project backup folder
-.backup/
+# Temporary files
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db
 
-# Unit Test Results
-test-results/
-*.xml
+# Python (if any Python files exist in the project)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.db
+*.db-journal
+.hypothesis/
+.pytest_cache/
+.mypy_cache/
 
-# Build cache
-.caches/
+# Node.js (if any Node files exist in the project)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnp
+.pnp.js
+.next
+.nuxt
+.vuepress/dist
+static/.nuxt
+.nyc_output
+coverage/
+lib-cov
+*.seed
+*.pid
+*.gz
+*.zip
+*.tar
+*.tgz
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.7z
+*.rar
+*.dmg
+*.iso
+*.bin
+*.msi
+*.deb
+*.rpm
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
 ```
