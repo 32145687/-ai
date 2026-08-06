@@ -14,7 +14,7 @@ import com.myai.assistant.data.local.entity.*
         ReminderEntity::class,
         UserBehaviorPatternEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(Converters::class)

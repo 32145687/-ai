@@ -1,120 +1,71 @@
 ```
-# Android
-*.apk
-*.aar
-*.ap_
-build/
-.gradle/
-captures/
-.externalNativeBuild
-cxx/
-local.properties
-
-# Kotlin
-*.kotlin_metadata
-
-# Java
+# Compiled and build artifacts
 *.class
-*.jar
-*.war
-*.ear
-*.nar
-*.hprof
-!*.jar
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.exe
+*.out
+build/
+dist/
 
-# Gradle
-.gradle
+# Dependencies
 .gradle/
-!gradle/wrapper/gradle-wrapper.jar
+target/
+node_modules/
+venv/
+.venv/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
 
-# IntelliJ IDEA
-.idea/
-*.iml
-*.ipr
-*.iws
-
-# VS Code
+# Editors
 .vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
 
 # Logs
 *.log
 
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
 # Environment
 .env
 .env.local
-.env.*
+*.env.*
 
-# Coverage reports
-coverage/
-*.gcov
-*.lcov
-*.tf
-*.info
-
-# Temporary files
-*.tmp
-*.temp
-*~
+# System
 .DS_Store
 Thumbs.db
 
-# Python (if any Python files exist in the project)
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-.venv/
-pip-log.txt
-pip-delete-this-directory.txt
-.tox
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.db
-*.db-journal
-.hypothesis/
-.pytest_cache/
-.mypy_cache/
-
-# Node.js (if any Node files exist in the project)
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-.pnp
-.pnp.js
-.next
-.nuxt
-.vuepress/dist
-static/.nuxt
-.nyc_output
-coverage/
-lib-cov
-*.seed
-*.pid
-*.gz
+# Compressed files
 *.zip
+*.gz
 *.tar
 *.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
 *.tar.gz
 *.tar.bz2
 *.tar.xz
-*.7z
-*.rar
-*.dmg
-*.iso
-*.bin
-*.msi
-*.deb
-*.rpm
-.DS_Store
-Thumbs.db
-ehthumbs.db
-Icon?
+*.tar.zst
 ```
