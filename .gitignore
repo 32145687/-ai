@@ -3,17 +3,12 @@
 *.class
 *.o
 *.obj
-*.so
-*.a
-*.dll
-*.exe
 *.out
 build/
-dist/
+target/
 
 # Dependencies
 .gradle/
-target/
 node_modules/
 venv/
 .venv/
@@ -26,24 +21,19 @@ __pycache__/
 .idea/
 *.swp
 *.swo
-*.tmp
 
-# Logs
-*.log
-
-# Coverage
-coverage/
-htmlcov/
-.coverage
-
-# Environment
+# System files
+.DS_Store
+Thumbs.db
 .env
 .env.local
 *.env.*
 
-# System
-.DS_Store
-Thumbs.db
+# Logs and coverage
+*.log
+coverage/
+htmlcov/
+.coverage
 
 # Compressed files
 *.zip
