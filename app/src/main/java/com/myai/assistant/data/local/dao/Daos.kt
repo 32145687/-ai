@@ -15,9 +15,6 @@ interface PersonaDao {
     @Query("SELECT * FROM personas WHERE isActive = 1 ORDER BY name")
     fun getActivePersonas(): Flow<List<PersonaEntity>>
 
-    @Query("SELECT p.*, COUNT(m.id) as memoryCount FROM personas p LEFT JOIN memories m ON p.id = m.personaId GROUP BY p.id ORDER BY p.createdAt DESC")
-    fun getAllPersonasWithMemoryCount(): Flow<List<PersonaEntity>>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPersona(persona: PersonaEntity)
 
@@ -29,9 +26,6 @@ interface PersonaDao {
 
     @Query("UPDATE personas SET isActive = 0")
     suspend fun deactivateAllPersonas()
-
-    @Query("UPDATE personas SET isActive = 1 WHERE id = :id")
-    suspend fun activatePersona(id: Long)
 
     @Query("SELECT COUNT(*) FROM personas")
     suspend fun getPersonaCount(): Int
@@ -105,15 +99,6 @@ interface MemoryDao {
     // Semantic search would be implemented with custom queries or FTS
     @Query("SELECT * FROM memories WHERE content LIKE '%' || :query || '%' ORDER BY importance DESC")
     suspend fun searchMemories(query: String): List<MemoryEntity>
-
-    @Query("SELECT * FROM memories WHERE content LIKE '%' || :query || '%' ORDER BY importance DESC")
-    fun searchMemoriesByContent(query: String): Flow<List<MemoryEntity>>
-
-    @Query("SELECT COUNT(*) FROM memories")
-    fun countAllMemories(): Flow<Int>
-
-    @Query("DELETE FROM memories")
-    suspend fun deleteAllMemories()
 
     @Query("SELECT * FROM memories ORDER BY createdAt DESC")
     fun getAllMemories(): Flow<List<MemoryEntity>>

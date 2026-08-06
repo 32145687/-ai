@@ -37,10 +37,7 @@ import com.myai.assistant.ui.theme.UserMessageBackground
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatScreen(
-    viewModel: ChatViewModel = hiltViewModel(),
-    onNavigateToSettings: () -> Unit = {},
-    onNavigateToPersona: () -> Unit = {},
-    onNavigateToMemory: () -> Unit = {}
+    viewModel: ChatViewModel = hiltViewModel()
 ) {
     val messages by viewModel.messages.collectAsState()
     var messageText by remember { mutableStateOf("") }
@@ -88,21 +85,14 @@ fun ChatScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = onNavigateToMemory) {
-                            Icon(
-                                Icons.Outlined.Bookmarks,
-                                contentDescription = "记忆库",
-                                tint = Color.White
-                            )
-                        }
-                        IconButton(onClick = onNavigateToPersona) {
+                        IconButton(onClick = { /* TODO: Open persona selector */ }) {
                             Icon(
                                 Icons.Outlined.PersonOutline,
                                 contentDescription = "切换人格",
                                 tint = Color.White
                             )
                         }
-                        IconButton(onClick = onNavigateToSettings) {
+                        IconButton(onClick = { /* TODO: Open settings */ }) {
                             Icon(
                                 Icons.Outlined.Settings,
                                 contentDescription = "设置",
